@@ -1,21 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+// @ts-check
+import React, { useState } from "react";
+import { StatusBar } from "expo-status-bar";
+import { Appearance, StyleSheet, Text, View } from "react-native";
+import { AppearanceSelector } from "./components/AppearanceSelector";
+import { useTheme } from "./hooks/useTheme";
 
-export default function App() {
+const App = () => {
+  const [currentAppColorScheme, setCurrentAppColorScheme] = useState("auto");
+  const currentTheme = useTheme({ currentAppColorScheme });
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: currentTheme.backgroundColor },
+      ]}
+    >
+      <Text
+        style={{ color: currentTheme.textColor }}
+      >{`The current OS color scheme is: ${Appearance.getColorScheme()}`}</Text>
+      <Text
+        style={{ color: currentTheme.textColor }}
+      >{`The current app color scheme is: ${currentAppColorScheme}`}</Text>
+      <AppearanceSelector
+        // @ts-ignore
+        currentAppColorScheme={currentAppColorScheme}
+        onChange={setCurrentAppColorScheme}
+      />
+      <StatusBar
+        // @ts-ignore
+        style={currentTheme.statusBarStyle}
+      />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
+
+export default App;
