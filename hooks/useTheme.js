@@ -1,21 +1,7 @@
 // @ts-check
 import { useColorScheme } from "react-native";
-
-/**
- * @typedef {'light' | 'dark'} OSColorScheme
- */
-
-/**
- * @typedef {'light' | 'dark' | 'auto'} AppColorScheme
- */
-
-/**
- * @typedef {Object} Theme
- * @property {string} backgroundColor
- * @property {string} textColor
- * @property {string} borderColor
- * @property {string} statusBarStyle
- */
+// eslint-disable-next-line no-unused-vars
+import typedefs from "./../typedefs";
 
 const theme = {
   light: {
@@ -34,10 +20,10 @@ const theme = {
 
 /**
  * @param {Object} params
- * @param {OSColorScheme} params.osColorScheme
- * @param {AppColorScheme} params.appColorScheme
+ * @param {typedefs.OSColorScheme} params.osColorScheme
+ * @param {typedefs.AppColorScheme} params.appColorScheme
  *
- * @returns {Theme}
+ * @returns {typedefs.Theme}
  */
 const getTheme = ({ osColorScheme, appColorScheme }) => {
   if (appColorScheme === "auto") {
@@ -50,6 +36,7 @@ const getTheme = ({ osColorScheme, appColorScheme }) => {
 const useTheme = ({ currentAppColorScheme }) => {
   const currentOSColorScheme = useColorScheme();
   return getTheme({
+    // @ts-ignore
     osColorScheme: currentOSColorScheme,
     appColorScheme: currentAppColorScheme,
   });
